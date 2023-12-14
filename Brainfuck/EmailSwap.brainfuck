@@ -1,0 +1,44 @@
+, [                      Read the email one character at a time
+  -                       Subtract 1 to convert uppercase to lowercase
+  [                       Loop to check if the character is a valid email character
+    >+<                   Copy the character to another cell
+    [->+>>+<<<]>[-<+>]    Copy the character for further processing
+    [                     Check if it's a lowercase letter (ASCII 97-122)
+      -                   Subtract 1
+      >>[                 If not, check if it's a digit (ASCII 48-57)
+        [->>>+<<<]        Copy the digit for further processing
+        >[-<+>]           Move back to the original cell
+        <[->+>>+<<<]>[-<+>] Copy the digit again
+        <<<[-]             Clear the digit cell
+        [->+<]             Copy the character back to the original cell
+      <<-]                End of the digit check
+      <<-]                End of the lowercase letter check
+      >[-]                Clear the copied character cell
+    <<-]                  End of the valid character check
+    >>[<<+>>-]<           Move the character back to the original cell
+    ,                     Read the next character
+  <<]<<                   End of character processing loop
+  >[->+<<-]>[              Move to the beginning of the email and copy it
+    -                     Subtract 1 to convert uppercase to lowercase
+    [                     Loop to check if it's an uppercase letter
+      -                   Subtract 1
+      <[->+<<+>>]          Copy the character for further processing
+      >>[                 Check if it's a lowercase letter (ASCII 97-122)
+        -                   Subtract 1
+        >>[                 If not, check if it's a digit (ASCII 48-57)
+          [->>>+<<<]          Copy the digit for further processing
+          >[-<+>]             Move back to the original cell
+          <[->+<<+>>]          Copy the digit again
+          <<<[-]               Clear the digit cell
+          [->+<]               Copy the character back to the original cell
+        <<-]                  End of the digit check
+        <<-]                  End of the lowercase letter check
+        >[-]                  Clear the copied character cell
+      <<-]                  End of the valid character check
+      <<[>>+<<-]            Move the character back to its original position
+      ,                     Read the next character
+    <<]                   End of character processing loop
+  >]<<                     End of email processing loop
+  [->+<]>                 Copy the email for output
+  .                       Output the lowercase email
+]
